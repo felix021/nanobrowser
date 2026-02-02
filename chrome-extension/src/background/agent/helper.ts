@@ -262,14 +262,23 @@ export function createChatModel(providerConfig: ProviderConfig, modelConfig: Mod
     case ProviderTypeEnum.Anthropic: {
       // For Opus models, only support temperature, not topP
       // For 4.5 models, only support either temperature or topP, not both, so we only use temperature to align with Opus
-      const args = {
+      const args: Record<string, unknown> = {
         model: modelConfig.modelName,
         apiKey: providerConfig.apiKey,
         maxTokens,
         temperature,
-        clientOptions: {},
       };
-      return new ChatAnthropic(args);
+      if (providerConfig.baseUrl) {
+        // Use anthropicApiUrl to set the custom base URL
+        args.anthropicApiUrl = providerConfig.baseUrl;
+        console.log('[createChatModel] Anthropic provider with custom base URL:', providerConfig.baseUrl);
+      }
+      const model = new ChatAnthropic(args);
+      console.log(
+        '[createChatModel] ChatAnthropic created with apiUrl:',
+        (model as unknown as { apiUrl?: string }).apiUrl,
+      );
+      return model;
     }
     case ProviderTypeEnum.DeepSeek: {
       const args = {

@@ -378,6 +378,9 @@
   "options_models_providers_placeholders_baseUrl_ollama": {
     "message": "Ollama base URL"
   },
+  "options_models_providers_placeholders_baseUrl_anthropic": {
+    "message": "Anthropic Base URL (optional, defaults to https://api.anthropic.com)"
+  },
   "options_models_providers_placeholders_azureDeployment": {
     "message": "Enter Azure model name (e.g. gpt-4o, gpt-4o-mini)"
   },
